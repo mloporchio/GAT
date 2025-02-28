@@ -7,12 +7,12 @@ CXX=g++
 CXX_FLAGS=-O3 --std=c++11 -I /data/matteoL/igraph/include/igraph
 LD_FLAGS=-L /data/matteoL/igraph/lib -ligraph -fopenmp
 JC=javac
-JFLAGS=-cp ".:lib/*"
+JC_FLAGS=-cp ".:lib/*"
 
 .PHONY: clean
 
 classes:
-	$(JC) $(JFLAGS) *.java
+	$(JC) $(JC_FLAGS) *.java
 
 %.o: %.cpp
 	$(CXX) $(CXX_FLAGS) -c $^ 

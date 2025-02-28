@@ -20,22 +20,28 @@ import java.util.Map;
  * Mint and burn transfers, as well as self-transfers, are ignored during graph construction.
  * 
  * INPUT:
- * A CSV file where each row includes the following fields.
- * 1) Block identifier in which the transfer occurred.
- * 2) Numeric identifier of the contract that produced the event.
- * 3) Numeric identifier of the sender of the transfer.
- * 4) Numeric identifier of the recipient of the transfer.
- * 5) Amount of tokens transferred.
+ * The ERC-20 transfer list of a contract, i.e., a CSV file where each row includes the following fields:
+ * 1) block identifier in which the transfer occurred;
+ * 2) numeric identifier of the contract that produced the event;
+ * 3) numeric identifier of the sender of the transfer;
+ * 4) numeric identifier of the recipient of the transfer;
+ * 5) amount of tokens transferred;
  * 
  * OUTPUT:
- * Two TSV files representing:
- * 1) The weighted list of edges.
- * 2) Mapping between original address identifiers (as used in the input file) and identifiers used in the edge list.
+ * The program outputs the following TSV files:
+ * 	1) 	the weighted edge list of the collapsed graph, where each row includes the following fields:
+ * 			- the numeric identifier of the sender;
+ * 			- the numeric identifier of the recipient;
+ * 			- the total number of transfers from sender to recipient;	
+ * 			- the total amount of tokens transferred from sender to recipient;
+ * 	2)	a TSV file containing the mapping between original address identifiers (i.e., those used
+ * 		in the input ERC-20 transfer list) and numeric identifiers used in the edge list.
  * 
  * PRINT:
- * 1) Number of nodes in the graph.
- * 2) Number of edges in the graph.
- * 3) Elapsed time for construction.
+ * The following information is printed to the standard output (separated by a tab character):
+ * 1) number of nodes in the graph;
+ * 2) number of edges in the graph;
+ * 3) elapsed time for construction.
  *  
  * @author Matteo Loporchio
  */
@@ -74,7 +80,7 @@ public class CollapsedGraphBuilder {
 				int toAddress = Integer.parseInt(parts[3]);
 				// Transfers with sender = 0x0 (mint) or receiver = 0x0 (burn) are ignored.
 				// Self-transfers are also ignored.
-				if (fromAddress != 0 && toAddress != 0 && fromAddress != toAddress) { {
+				if (fromAddress != 0 && toAddress != 0 && fromAddress != toAddress) {
 					int fromId = getOrCreateId(fromAddress);
 					int toId = getOrCreateId(toAddress);
                     double value = Double.parseDouble(parts[4]);
