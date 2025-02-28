@@ -49,20 +49,20 @@ public class CollapsedGraphBuilder {
 	public static int nextId = 0;
 	public static Map<Integer, Integer> nodes = new LinkedHashMap<>();
 	public static List<MultigraphEdge> edges = new ArrayList<>();
-    
-    public static void main(String[] args) {
+	
+	public static void main(String[] args) {
 		if (args.length < 3) {
 			System.err.printf("Usage: %s <inputFile> <edgeListFile> <nodeMapFile>\n", CollapsedGraphBuilder.class.getName());
 			System.exit(1);
 		}
 
 		// Read all input parameters.
-        final String inputFile = args[0];
+		final String inputFile = args[0];
 		final String edgeListFile = args[1];
 		final String nodeMapFile = args[2];
-        
+		
 		long start = System.nanoTime();
-        try (
+		try (
 				BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile)));
 				PrintWriter edgeOut = new PrintWriter(edgeListFile);
 				PrintWriter nodeOut = new PrintWriter(nodeMapFile);
@@ -83,7 +83,7 @@ public class CollapsedGraphBuilder {
 				if (fromAddress != 0 && toAddress != 0 && fromAddress != toAddress) {
 					int fromId = getOrCreateId(fromAddress);
 					int toId = getOrCreateId(toAddress);
-                    double value = Double.parseDouble(parts[4]);
+					double value = Double.parseDouble(parts[4]);
 					edges.add(new MultigraphEdge(fromId, toId, value));
 				}
 			}
@@ -123,7 +123,7 @@ public class CollapsedGraphBuilder {
 			e.printStackTrace();
 			System.exit(1);
 		}
-    }
+	}
 
 	/**
 	 * Assigns a unique and progressive numeric identifier to an address.
