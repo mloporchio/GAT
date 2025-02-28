@@ -6,28 +6,25 @@
 CXX=g++
 CXX_FLAGS=-O3 --std=c++11 -I /data/matteoL/igraph/include/igraph
 LD_FLAGS=-L /data/matteoL/igraph/lib -ligraph -fopenmp
+JC=javac
+JFLAGS=-cp ".:lib/*"
 
+.SUFFIXES: .java .class
 .PHONY: clean
+
+classes:
+	$(JC) $(JFLAGS) *.java
 
 %.o: %.cpp
 	$(CXX) $(CXX_FLAGS) -c $^ 
 
-collapsed_graph_degree: graph.o collapsed_graph_degree.o
+cg_degree: graph.o cg_degree.o
 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
 
-multigraph_degree: graph.o multigraph_degree.o
+mg_degree: graph.o mg_degree.o
 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
 
-# analyzer_gcc: analyzer_gcc.o
-# 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
-
-# builder: builder.o
-# 	$(CXX) $(CXX_FLAGS) $^ -o $@
-
-# pl_fit: pl_fit.o
-# 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
-
-all: collapsed_graph_degree multigraph_degree
+all: classes cg_degree mg_degree
 
 clean:
-	rm -f *.o collapsed_graph_degree multigraph_degree
+	$(RM) *.class *.o cg_degree mg_degree

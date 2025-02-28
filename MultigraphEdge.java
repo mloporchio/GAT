@@ -1,9 +1,7 @@
 import java.util.Objects;
 
 /**
- * Classe che rappresenta un arco orientato del multigrafo globale.
- *
- * 
+ * Represents a directed weighted edge of the multigraph. 
  * @author Matteo Loporchio
  */
 public class MultigraphEdge implements Comparable<MultigraphEdge> {

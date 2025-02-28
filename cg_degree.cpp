@@ -1,19 +1,19 @@
 /**
- * @file collapsed_graph_degree.cpp
+ * @file cg_degree.cpp
  * @author Matteo Loporchio
- * @date 2025-02-16
+ * @date 2025-02-28
  * 
  *  This program reads the collapsed graph from a file and computes information 
  *  related to the degree and strength of each node. The strength is calculated 
  *  based on the two weights associated with each edge, namely the total number 
- *  of transfers and the total value transferred.
+ *  of transfers and the total amount transferred.
  *
  *  INPUT:
  *  The weighted edge list for the collapsed graph.
  *
  *  OUTPUT:
  *  A TSV file summarizing degree and strength properties for each node.
- *  The output file contains one line for each node and each line includes 7 fields:
+ *  The output file contains one line for each node and each line includes the following fields:
  *      - numeric identifier of the node;
  *      - in-degree of the node;
  *      - out-degree of the node;

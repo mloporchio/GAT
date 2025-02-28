@@ -1,7 +1,7 @@
 /**
- * @file collapsed_graph_connectivity.cpp
+ * @file cg_connectivity.cpp
  * @author Matteo Loporchio
- * @date 2025-02-16
+ * @date 2025-02-28
  * 
  * 
  */

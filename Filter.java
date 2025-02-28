@@ -5,24 +5,24 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 
 /**
- * Questa classe legge il dataset dei trasferimenti ERC-20 
- * (nel formato originale descritto qui: https://zenodo.org/records/10644077) 
- * e crea un unico file contenente le informazioni relative ai trasferimenti del contratto di interesse.
+ * This class reads the ERC-20 transfer dataset (see: https://zenodo.org/records/10644077)
+ * and filters the transfers created by a target contract, creating a single file with 
+ * all information about the target contract transfers.
  * 
  * INPUT:
- * 1) percorso del file dei trasferimenti;
- * 2) percorso del file con gli importi dei trasferimenti;
- * 3) identificativo del contratto di interesse;
- * 4) numero di decimali del contratto.
+ * 1) path of the ERC-20 transfer file;
+ * 2) path of the ERC-20 transfer values file;
+ * 3) target contract identifier;
+ * 4) target contract decimals.
  *
  * OUTPUT:
- * un file CSV dove ciascuna riga contiene, nell'ordine, i seguenti 5 campi.
- * 
- * 1) Block identifier in which the transfer occurred.
- * 2) Numeric identifier of the contract that produced the event.
- * 3) Numeric identifier of the sender of the transfer.
- * 4) Numeric identifier of the recipient of the transfer.
- * 5) Amount of tokens transferred.
+ * The program creates a new CSV file with the filtered transfers.
+ * Each line represents a token transfer and includes the following fields:
+ * 1) block identifier in which the transfer occurred.
+ * 2) numeric identifier of the contract that produced the event.
+ * 3) numeric identifier of the sender of the transfer.
+ * 4) numeric identifier of the recipient of the transfer.
+ * 5) amount of tokens transferred.
  * 
  * @author Matteo Loporchio
  */

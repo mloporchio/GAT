@@ -9,31 +9,30 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Questa classe costruisce il multigrafo globale a partire dai trasferimenti ERC-20 di un contratto.
- * Il multigrafo globale è la rete di tutti i trasferimenti prodotti da un contratto.
- * - Ogni nodo rappresenta un indirizzo.
- * - Ogni arco orientato (u, v) rappresenta un trasferimento da u a v e viene etichettato con:
- * a)
- * b)
- * 
+ * This class reads the ERC-20 transfer list of a given contract and builds the corresponding multigraph.
+ * In the multigraph, each node represents an Ethereum address, while each directed edge (u, v) represents 
+ * a token transfer from address u to v and is labeled with the amount of tokens transferred.
+
  * INPUT:
- * Un file CSV dove ciascuna riga contiene, nell'ordine, i seguenti 5 campi.
- * 
- * 1) Block identifier in which the transfer occurred.
- * 2) Numeric identifier of the contract that produced the event.
- * 3) Numeric identifier of the sender of the transfer.
- * 4) Numeric identifier of the recipient of the transfer.
- * 5) Amount of tokens transferred.
+ * The ERC-20 transfer list of a contract, i.e., a CSV file where each row includes the following fields:
+ * 	1) block identifier in which the transfer occurred;
+ * 	2) numeric identifier of the contract that produced the event;
+ * 	3) numeric identifier of the sender of the transfer;
+ * 	4) numeric identifier of the recipient of the transfer;
+ * 	5) amount of tokens transferred.
  * 
  * OUTPUT:
- * La classe produce in output i seguenti file.
- * 
- * 1)
- * 2)
- * 3)
+ * The program outputs the following TSV files:
+ * 	1) 	the weighted edge list of the multigraph, where each row includes the following fields:
+ * 			- the numeric identifier of the sender;
+ * 			- the numeric identifier of the recipient;
+ * 			- the amount of tokens transferred;
+ * 	2)	a TSV file containing the mapping between original address identifiers (i.e., those used
+ * 		in the input ERC-20 transfer list) and numeric identifiers used in the edge list.
  * 
  * PRINT:
- * Il programma stampa in output il numero di nodi, archi e il tempo impiegato per la costruzione.
+ * The program prints to stdout the number of nodes, edges, and the elapsed time for the construction
+ * (all separated by a tab character).
  * 
  * @author Matteo Loporchio
  */
@@ -65,7 +64,8 @@ public class MultigraphBuilder {
 				int fromAddress = Integer.parseInt(parts[2]);
 				int toAddress = Integer.parseInt(parts[3]);
 				// Transfers with sender = 0x0 or receiver = 0x0 are ignored.
-				if (fromAddress != 0 && toAddress != 0)  {
+				// Self-transfers are also ignored.
+				if (fromAddress != 0 && toAddress != 0 && fromAddress != toAddress) {
 					int fromId = getOrCreateId(fromAddress);
 					int toId = getOrCreateId(toAddress);
                     double value = Double.parseDouble(parts[4]);

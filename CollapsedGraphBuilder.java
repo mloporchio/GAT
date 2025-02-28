@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class constructs a Collapsed Graph from a list of ERC-20 transfers.
- * In this graph, a directed edge (u, v) represents a transfer between u and v and is labeled with:
- * 1) The total number of transfers from address u to v.
- * 2) The total amount of tokens transferred from address u to v.
+ * This class constructs a collapsed graph from the ERC-20 transfer list of a contract.
  * 
- * Mint and burn transfers are ignored during graph construction.
+ * In the collapsed graph:
+ * - each node represents an Ethereum address;
+ * - each directed edge (u, v) represents a transfer from address u to v and is labeled with:
+ * 	- the total number of transfers from u to v;
+ * 	- the total amount of tokens transferred from u to v.
+ * 
+ * Mint and burn transfers, as well as self-transfers, are ignored during graph construction.
  * 
  * INPUT:
  * A CSV file where each row includes the following fields.
@@ -104,7 +107,7 @@ public class CollapsedGraphBuilder {
 			}
 			// Write the (address, id) associations to the corresponding file.
 			for (int key : nodes.keySet())
-			nodeOut.printf("%d\t%d\n", key, nodes.get(key));
+				nodeOut.printf("%d\t%d\n", key, nodes.get(key));
 			// Stampa in output il numero di nodi, archi e tempo impiegato per la costruzione.
 			long end = System.nanoTime();
 			System.out.printf("%d\t%d\t%d\n", nodes.size(), numUniqueEdges, end-start);

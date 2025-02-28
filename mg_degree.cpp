@@ -1,9 +1,30 @@
 /**
- * @file multigraph_degree.cpp
+ * @file mg_degree.cpp
  * @author Matteo Loporchio
- * @date 2025-02-16
+ * @date 2025-02-28
  * 
- * 
+ *  This program reads the multigraph from a file and computes information 
+ *  related to the degree and strength of each node. 
+ *  The strength is calculated based on the amount of tokens transferred.
+ *
+ *  INPUT:
+ *  The weighted edge list for the multigraph.
+ *
+ *  OUTPUT:
+ *  A TSV file summarizing degree and strength properties for each node.
+ *  The output file contains one line for each node. 
+ *  Each line includes the following fields:
+ *      - numeric identifier of the node;
+ *      - in-degree of the node;
+ *      - out-degree of the node;
+ *      - in-strength of the node (computed according to incoming amounts);
+ *      - out-strength of the node (computed according to outgoing amounts);
+ *
+ *  PRINT:
+ *  The program prints the following information to stdout:
+ *      - number of graph nodes;
+ *      - number of graph edges;
+ *      - elapsed time (in nanoseconds).
  */
 
 #include <chrono>
