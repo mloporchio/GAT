@@ -2,6 +2,7 @@ import java.util.Objects;
 
 /**
  * Represents a directed weighted edge of the multigraph. 
+ * 
  * @author Matteo Loporchio
  */
 public class MultigraphEdge implements Comparable<MultigraphEdge> {
@@ -15,18 +16,18 @@ public class MultigraphEdge implements Comparable<MultigraphEdge> {
 		this.value = value;
 	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.fromId, this.toId);
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof MultigraphEdge)) return false;
-        if (o == this) return true;
-        MultigraphEdge e = (MultigraphEdge) o;
-        return (this.fromId == e.fromId && this.toId == e.toId);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.fromId, this.toId);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof MultigraphEdge)) return false;
+		if (o == this) return true;
+		MultigraphEdge e = (MultigraphEdge) o;
+		return (this.fromId == e.fromId && this.toId == e.toId);
+	}
 
 	@Override
 	public int compareTo(MultigraphEdge o) {

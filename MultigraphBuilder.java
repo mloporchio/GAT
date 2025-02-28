@@ -12,7 +12,7 @@ import java.util.Map;
  * This class reads the ERC-20 transfer list of a given contract and builds the corresponding multigraph.
  * In the multigraph, each node represents an Ethereum address, while each directed edge (u, v) represents 
  * a token transfer from address u to v and is labeled with the amount of tokens transferred.
-
+ * 
  * INPUT:
  * The ERC-20 transfer list of a contract, i.e., a CSV file where each row includes the following fields:
  * 	1) block identifier in which the transfer occurred;
