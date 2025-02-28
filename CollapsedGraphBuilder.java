@@ -73,7 +73,8 @@ public class CollapsedGraphBuilder {
 				int fromAddress = Integer.parseInt(parts[2]);
 				int toAddress = Integer.parseInt(parts[3]);
 				// Transfers with sender = 0x0 (mint) or receiver = 0x0 (burn) are ignored.
-				if (fromAddress != 0 && toAddress != 0)  {
+				// Self-transfers are also ignored.
+				if (fromAddress != 0 && toAddress != 0 && fromAddress != toAddress) { {
 					int fromId = getOrCreateId(fromAddress);
 					int toId = getOrCreateId(toAddress);
                     double value = Double.parseDouble(parts[4]);

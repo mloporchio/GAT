@@ -37,7 +37,6 @@ INPUT_PATH="./data"
 COLLAPSED_OUTPUT_PATH="./results/cg"
 WEBGRAPH_OUTPUT_PATH="./results/webgraph"
 OUTPUT_FILE="${COLLAPSED_OUTPUT_PATH}/cg_build_stats.tsv"
-JAVA_OPTIONS=""
 
 printf "name\tnum_nodes\tnum_edges\telapsed_time\n" > ${OUTPUT_FILE}
 for NAME in ${NAMES[@]}; do
@@ -49,6 +48,6 @@ for NAME in ${NAMES[@]}; do
     # Then, transform each edge list into the WebGraph BVGraph format.
     WEBGRAPH_TEMP_EL="${WEBGRAPH_OUTPUT_PATH}/${NAME}_temp_el.tsv"
     cut -d$'\t' -f1,2 "${EDGE_LIST_FILE}" > "${WEBGRAPH_TEMP_EL}"
-    java -Xmx128g -cp ".:./lib/*" ${WEBGRAPH_BUILDER} "${WEBGRAPH_TEMP_EL}" "${WEBGRAPH_OUTPUT_PATH}/${NAME}"
+    java -Xmx128g -cp ".:lib/*" ${WEBGRAPH_BUILDER} "${WEBGRAPH_TEMP_EL}" "${WEBGRAPH_OUTPUT_PATH}/${NAME}"
     rm "${WEBGRAPH_TEMP_EL}" # Delete temporary edge list
 done
