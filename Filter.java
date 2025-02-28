@@ -28,17 +28,17 @@ import java.math.BigDecimal;
  */
 public class Filter {
 	public static void main(String[] args) {
-        if (args.length < 5) {
+		if (args.length < 5) {
 			System.err.printf("Usage: %s <transferFile> <valuesFile> <targetContractId> <decimals> <outputFile>\n", Filter.class.getName());
 			System.exit(1);
 		}
-        
+		
 		final String transferFile = args[0];
 		final String valuesFile = args[1];
 		final int targetContractId = Integer.parseInt(args[2]);
-        final BigDecimal scaleFactor = BigDecimal.TEN.pow(Integer.parseInt(args[3]));
+		final BigDecimal scaleFactor = BigDecimal.TEN.pow(Integer.parseInt(args[3]));
 		final String outputFile = args[4];
-        
+		
 		try (
 			BufferedReader tin = new BufferedReader(new InputStreamReader(new FileInputStream(transferFile)));
 			BufferedReader vin = new BufferedReader(new InputStreamReader(new FileInputStream(valuesFile)));
@@ -50,9 +50,9 @@ public class Filter {
 				String[] parts = line1.split(",");
 				int contractId = Integer.parseInt(parts[1]);
 				if (contractId == targetContractId) {
-                    double value = (new BigDecimal(line2)).divide(scaleFactor).doubleValue();
-                    out.printf("%s,%d,%s,%s,%f\n", parts[0], contractId, parts[2], parts[3], value);
-                }
+					double value = (new BigDecimal(line2)).divide(scaleFactor).doubleValue();
+					out.printf("%s,%d,%s,%s,%f\n", parts[0], contractId, parts[2], parts[3], value);
+				}
 			}
 		}
 		catch (Exception e) {

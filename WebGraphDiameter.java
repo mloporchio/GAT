@@ -37,82 +37,79 @@ public class WebGraphDiameter {
 
 	public static void main(String[] args) throws Exception {
 		SimpleJSAP jsap = new SimpleJSAP(
-            WebGraphDiameter.class.getName(),
-            "Computes the diameter of a graph stored in the BVGraph format.",
-            new Parameter[]{
-                new UnflaggedOption("filename", JSAP.STRING_PARSER, true, 
-                "Path of the files representing the graph in BVGraph format."),
-                new Switch("undirected", 'u', "undirected", 
-                "Specifies whether the graph should be treated as undirected."),
-                new Switch("comp", 'c', "comp", 
-                "Specifies whether the computation should be performed on the largest weakly connected component of the graph.")
-            }
-        );
+			WebGraphDiameter.class.getName(),
+			"Computes the diameter of a graph stored in the BVGraph format.",
+			new Parameter[]{
+				new UnflaggedOption("filename", JSAP.STRING_PARSER, true, 
+				"Path of the files representing the graph in BVGraph format."),
+				new Switch("undirected", 'u', "undirected", 
+				"Specifies whether the graph should be treated as undirected."),
+				new Switch("comp", 'c', "comp", 
+				"Specifies whether the computation should be performed on the largest weakly connected component of the graph.")
+			}
+		);
 
 		// Retrieve and use parsed arguments
 		JSAPResult config = jsap.parse(args);
 		if (jsap.messagePrinted()) {
-            System.err.println();
-            System.err.println("Usage: java " + WebGraphDiameter.class.getName());
-            System.err.printf(jsap.getHelp());
-            System.exit(1);
-        }
-        String filename = config.getString("filename"); // Get the unflagged option
-        boolean undirected = config.getBoolean("undirected");
-        boolean comp = config.getBoolean("comp");
+			System.err.println();
+			System.err.println("Usage: java " + WebGraphDiameter.class.getName());
+			System.err.printf(jsap.getHelp());
+			System.exit(1);
+		}
+		String filename = config.getString("filename"); // Get the unflagged option
+		boolean undirected = config.getBoolean("undirected");
+		boolean comp = config.getBoolean("comp");
 
-        long start = System.nanoTime();
+		long start = System.nanoTime();
 
-        // Load the graph.
+		// Load the graph.
 		ImmutableGraph graph = ImmutableGraph.load(filename);
 
-        // If necessary, transform the graph into its undirected version.
-        if (undirected) {
-		    ImmutableGraph symmetricalGraph = Transform.symmetrize(graph);
-            graph = symmetricalGraph;
-        }
+		// If necessary, transform the graph into its undirected version.
+		if (undirected) {
+			ImmutableGraph symmetricalGraph = Transform.symmetrize(graph);
+			graph = symmetricalGraph;
+		}
 
-        // If necessary, compute the largest weakly connected component.
-        if (comp) {
-            ImmutableGraph largestComp = ConnectedComponents.getLargestComponent(graph, 0, null);
-            graph = largestComp;
-        }
+		// If necessary, compute the largest weakly connected component.
+		if (comp) {
+			ImmutableGraph largestComp = ConnectedComponents.getLargestComponent(graph, 0, null);
+			graph = largestComp;
+		}
 
-        // Compute the number of nodes and edges.
+		// Compute the number of nodes and edges.
 		int numNodes = graph.numNodes();
 		long numEdges = graph.numArcs();
 		
 		// Compute the diameter.
-        int diameter = ((undirected) ? undirectedDiameter(graph) : directedDiameter(graph));
+		int diameter = ((undirected) ? undirectedDiameter(graph) : directedDiameter(graph));
 
-        long elapsed = System.nanoTime() - start;
-        System.out.printf("%d\t%d\t%d\t%d\n", numNodes, numEdges, diameter, elapsed);
+		long elapsed = System.nanoTime() - start;
+		System.out.printf("%d\t%d\t%d\t%d\n", numNodes, numEdges, diameter, elapsed);
 	}
 
-    /**
-     * Computes the diameter of an undirected graph.
-     * @param graph input undirected graph
-     * @return diameter of the graph
-     */
-    public static int undirectedDiameter(ImmutableGraph graph) {
-        SumSweepUndirectedDiameterRadius dr = new SumSweepUndirectedDiameterRadius(graph, 
-            SumSweepUndirectedDiameterRadius.OutputLevel.DIAMETER, null);
-        dr.compute(); 
-        return dr.getDiameter();
-    }
+	/**
+	 * Computes the diameter of an undirected graph.
+	 * @param graph input undirected graph
+	 * @return diameter of the graph
+	 */
+	public static int undirectedDiameter(ImmutableGraph graph) {
+		SumSweepUndirectedDiameterRadius dr = new SumSweepUndirectedDiameterRadius(graph, 
+			SumSweepUndirectedDiameterRadius.OutputLevel.DIAMETER, null);
+		dr.compute(); 
+		return dr.getDiameter();
+	}
 
-    /**
-     * Computes the diameter of a directed graph.
-     * @param graph input directed graph
-     * @return diameter of the graph
-     */
-    public static int directedDiameter(ImmutableGraph graph) {
-        SumSweepDirectedDiameterRadius dr = new SumSweepDirectedDiameterRadius(graph, 
-            SumSweepDirectedDiameterRadius.OutputLevel.DIAMETER, null, null);
-        dr.compute();
-        return dr.getDiameter();
-    }
+	/**
+	 * Computes the diameter of a directed graph.
+	 * @param graph input directed graph
+	 * @return diameter of the graph
+	 */
+	public static int directedDiameter(ImmutableGraph graph) {
+		SumSweepDirectedDiameterRadius dr = new SumSweepDirectedDiameterRadius(graph, 
+			SumSweepDirectedDiameterRadius.OutputLevel.DIAMETER, null, null);
+		dr.compute();
+		return dr.getDiameter();
+	}
 }
-
-
-
