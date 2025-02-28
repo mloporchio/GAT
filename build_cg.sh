@@ -38,6 +38,9 @@ COLLAPSED_OUTPUT_PATH="./results/cg"
 WEBGRAPH_OUTPUT_PATH="./results/webgraph"
 OUTPUT_FILE="${COLLAPSED_OUTPUT_PATH}/cg_build_stats.tsv"
 
+mkdir -p ${COLLAPSED_OUTPUT_PATH}
+mkdir -p ${WEBGRAPH_OUTPUT_PATH}
+
 printf "name\tnum_nodes\tnum_edges\telapsed_time\n" > ${OUTPUT_FILE}
 for NAME in ${NAMES[@]}; do
     INPUT_FILE="${INPUT_PATH}/${NAME}.csv"

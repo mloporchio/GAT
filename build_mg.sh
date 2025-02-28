@@ -28,6 +28,8 @@ INPUT_PATH="./data"
 OUTPUT_PATH="./results/mg"
 OUTPUT_FILE="${OUTPUT_PATH}/mg_build_stats.tsv"
 
+mkdir -p "${OUTPUT_PATH}"
+
 printf "name\tnum_nodes\tnum_edges\telapsed_time\n" > ${OUTPUT_FILE}
 for NAME in ${NAMES[@]}; do
     INPUT_FILE="${INPUT_PATH}/${NAME}.csv"
