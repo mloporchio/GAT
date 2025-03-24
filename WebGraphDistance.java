@@ -37,7 +37,7 @@ public class WebGraphDistance {
 	public static final int log2m = 7; // Logarithm of the number of registers per counter (used by HyperBall).
 	public static void main(String[] args) throws Exception {
 		SimpleJSAP jsap = new SimpleJSAP(
-			WebGraphDiameter.class.getName(),
+			WebGraphDistance.class.getName(),
 			"Computes the average shortest path length of a graph stored in the BVGraph format.",
 			new Parameter[]{
 				new UnflaggedOption("filename", JSAP.STRING_PARSER, true, 

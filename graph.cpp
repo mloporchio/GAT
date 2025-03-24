@@ -104,3 +104,35 @@ void read_collapsed_graph(igraph_t *graph, igraph_vector_t *w_ntr, igraph_vector
     igraph_add_edges(graph, &edges, NULL);
     igraph_vector_int_destroy(&edges);
 }
+
+/**
+ * @brief Extracts the subgraph induced by the largest weakly connected component.
+ * @param graph the original graph
+ * @param comp the graph representing the largest weakly connected component of the input graph
+ */
+void get_largest_wcc(igraph_t *graph, igraph_t *comp) {
+    if (!graph || !comp) return;
+    // Compute the weakly connected components of the graph.
+    igraph_integer_t num_nodes = igraph_vcount(graph);
+    igraph_integer_t num_wcc;
+    igraph_vector_int_t wcc_map;
+    igraph_vector_int_t wcc_sizes;
+    igraph_vector_int_init(&wcc_map, num_nodes);
+    igraph_vector_int_init(&wcc_sizes, num_nodes);
+    igraph_connected_components(graph, &wcc_map, &wcc_sizes, &num_wcc, IGRAPH_WEAK);
+    // Extract the subgraph corresponding to the largest connected component.
+    igraph_integer_t largest_comp_id = igraph_vector_int_which_max(&wcc_sizes);
+    igraph_integer_t largest_comp_size = VECTOR(wcc_sizes)[largest_comp_id];
+    igraph_vector_int_t comp_vertices;
+    igraph_vector_int_init(&comp_vertices, largest_comp_size);
+    int j = 0;
+    for (int i = 0; i < num_nodes; i++) {
+        if (VECTOR(wcc_map)[i] == largest_comp_id) {
+            VECTOR(comp_vertices)[j] = i;
+            j++;
+        }
+    }   
+    igraph_vs_t comp_vids;
+    igraph_vs_vector(&comp_vids, &comp_vertices);
+    igraph_induced_subgraph(graph, comp, comp_vids, IGRAPH_SUBGRAPH_AUTO);
+}

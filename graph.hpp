@@ -43,4 +43,11 @@ void read_multigraph(igraph_t *graph, igraph_vector_t *w_amount, FILE *input_fil
  */
 void read_collapsed_graph(igraph_t *graph, igraph_vector_t *w_ntr, igraph_vector_t *w_amount, FILE *input_file);
 
+/**
+ * @brief Extracts the subgraph induced by the largest weakly connected component.
+ * @param graph the original graph
+ * @param comp the graph representing the largest weakly connected component of the input graph
+ */
+void get_largest_wcc(igraph_t *graph, igraph_t *comp);
+
 #endif

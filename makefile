@@ -17,19 +17,28 @@ classes:
 %.o: %.cpp
 	$(CXX) $(CXX_FLAGS) -c $^ 
 
+cg_connectivity: graph.o cg_connectivity.o
+	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
+
 cg_degree: graph.o cg_degree.o
 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
 
-cg_connectivity: graph.o cg_connectivity.o
+cg_distance: graph.o cg_distance.o
+	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
+
+cg_harmonic: graph.o cg_harmonic.o
+	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
+
+cg_pagerank: graph.o cg_pagerank.o
 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
 
 mg_degree: graph.o mg_degree.o
 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LD_FLAGS)
 
-all: classes cg_degree cg_connectivity mg_degree
+all: classes cg_connectivity cg_degree cg_distance cg_harmonic cg_pagerank mg_degree
 
 clean:
-	$(RM) *.class *.o cg_degree cg_connectivity mg_degree
+	$(RM) *.class *.o cg_connectivity cg_degree cg_distance cg_harmonic cg_pagerank mg_degree
 
 cleanall: clean
 	$(RM) results/cg/* results/mg/* results/webgraph/*
