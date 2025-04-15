@@ -26,7 +26,7 @@
 #include <iostream>
 #include "graph.hpp"
 
-#define DAMPING_FACTOR 0.85 // This is the default damping factor for PageRank.
+#define DAMPING_FACTOR 0.85 // This is the default damping factor for PageRank
 
 using namespace std;
 using namespace std::chrono;

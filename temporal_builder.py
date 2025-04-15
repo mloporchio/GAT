@@ -45,7 +45,7 @@ df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
 # Set the timestamp as the index.
 df.set_index('timestamp', inplace=True)
 
-# Resample the dataframe using chunks witha size equal to CHUNK_SIZE.
+# Resample the dataframe using chunks with a size equal to CHUNK_SIZE.
 rdf = df.resample(CHUNK_SIZE)
 # Save each chunk to a separate CSV file.
 with open(CHUNK_MAP_FILE, 'w') as f:
@@ -53,3 +53,6 @@ with open(CHUNK_MAP_FILE, 'w') as f:
     for i, (timestamp, data) in enumerate(rdf):
         data.to_csv(f'{CHUNK_BASE_NAME}_{i}.csv', index=False, header=False)
         f.write(f'{i}\t{timestamp}\n')
+        
+# Print the number of chunks created.
+print(len(rdf))
